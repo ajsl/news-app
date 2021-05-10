@@ -1,4 +1,4 @@
-export interface IGardianResponse {
+export interface IGardianResponseSearch {
   response: {
     currentPage: number;
     orderBy: string;
@@ -9,6 +9,15 @@ export interface IGardianResponse {
     status: string;
     total: number;
   };
+}
+
+export interface IGuardianResponseSingle {
+    response: {
+        status: string;
+        userTier: string;
+        total: number;
+        content: IArticle;
+    }
 }
 
 export interface IArticle {

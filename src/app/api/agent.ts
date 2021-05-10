@@ -1,19 +1,32 @@
 import axios, { AxiosResponse } from "axios";
-import { IArticle, IGardianResponse } from "../models/article";
+import {
+  IGardianResponseSearch,
+  IGuardianResponseSingle,
+} from "../models/article";
 
 const responseBody = (response: AxiosResponse) => response.data;
+
+const guardianApiKey = process.env.GUARDIAN_API_KEY;
 
 const requests = {
   get: (url: string, params: {}) => axios.get(url, params).then(responseBody),
 };
 
 const Articles = {
-  guardian: (): Promise<IGardianResponse> =>
+  guardian: (): Promise<IGardianResponseSearch> =>
     requests.get("https://content.guardianapis.com/search", {
-      params: { "api-key": "0c78c472-198c-4413-9f87-92bc2f621783" },
+      params: { "api-key": guardianApiKey },
+    }),
+};
+
+const Article = {
+  guardian: (url: string): Promise<IGuardianResponseSingle> =>
+    requests.get(url, {
+      params: { "api-key": guardianApiKey },
     }),
 };
 
 export default {
   Articles,
+  Article
 };
